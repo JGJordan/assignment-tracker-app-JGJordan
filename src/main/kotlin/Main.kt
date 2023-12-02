@@ -56,7 +56,7 @@ fun runMenu() {
  * Displays a message indicating the user chose to view a subject.
  */
 fun viewSubject() {
-    println("You chose to view a subject")
+    println(SubjectAPI.listSubjects())
 }
 
 /**
@@ -66,7 +66,7 @@ fun addSubject() {
     val subjectName = readNextLine("Enter the name of the subject: ")
     val subjectGrade = readNextLine("Enter the grade current grade you have achieved: ")
     val subjectLecturer = readNextLine("Enter the name of your lecturer: ")
-    val isAdded = SubjectAPI.add(Subject(1, subjectName, subjectGrade,subjectLecturer))
+    val isAdded = SubjectAPI.add(Subject(SubjectAPI.numberOfSubjects() + 1, subjectName, subjectGrade,subjectLecturer))
     if (isAdded) {
         println("Subject is Added")
     } else {
