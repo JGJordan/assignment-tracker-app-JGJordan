@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="controllers.SubjectAPITest$CRUD" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-12-02T20:55:08" hostname="DESKTOP-H2TFO59" time="0.048">
+  <properties/>
+  <testcase name="Adding a subject to an empty array list adds to the list()" classname="controllers.SubjectAPITest$CRUD" time="0.048"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

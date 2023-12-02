@@ -13,10 +13,10 @@ class SubjectAPI {
         return subjects.size
     }
     fun listSubjects(): String {
-        if (subjects.isNotEmpty()) {
-            return subjects.joinToString(" ")
+        return if (subjects.isNotEmpty()) {
+            subjects.joinToString(" ")
         } else {
-            return "You have no subjects"
+            "You have no subjects"
         }
     }
 }
