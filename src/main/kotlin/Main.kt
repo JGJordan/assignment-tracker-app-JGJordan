@@ -1,7 +1,13 @@
 package utils
 
+import utils.ScannerInput.readNextLine
+import utils.controllers.SubjectAPI
+import utils.models.Subject
 import java.util.*
 import java.lang.System.exit
+
+
+private val SubjectAPI = SubjectAPI()
 
 /**
  * Runs the assignment tracker menu.
@@ -57,7 +63,15 @@ fun viewSubject() {
  * Displays a message indicating the user chose to add a subject.
  */
 fun addSubject() {
-    println("You chose to add a subject")
+    val subjectName = readNextLine("Enter the name of the subject: ")
+    val subjectGrade = readNextLine("Enter the grade current grade you have achieved: ")
+    val subjectLecturer = readNextLine("Enter the name of your lecturer: ")
+    val isAdded = SubjectAPI.add(Subject(1, subjectName, subjectGrade,subjectLecturer))
+    if (isAdded) {
+        println("Subject is Added")
+    } else {
+        println("Add failed")
+    }
 }
 
 /**

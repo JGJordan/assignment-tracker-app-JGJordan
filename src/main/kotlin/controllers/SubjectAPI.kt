@@ -1,13 +1,16 @@
 package utils.controllers
-
 import utils.models.Subject
 
 
-class NoteAPI {
+class SubjectAPI {
     private var subjects = ArrayList<Subject>()
 
-    fun addSubject(subject : Subject) : Boolean {
+    fun add(subject : Subject) : Boolean {
         return subjects.add(subject)
+    }
+
+    fun numberOfSubjects(): Int {
+        return subjects.size
     }
 }
 
