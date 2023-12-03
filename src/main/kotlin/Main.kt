@@ -54,6 +54,22 @@ fun mainMenu(): Int {
     """.trimMargin())
 }
 
+fun subjectMenu(): Int {
+    return readNextInt("""
+        |    ____________________________
+        |    |                          | 
+        |    |--------------------------|
+        |    |      SUBJECT MENU        |
+        |    |                          | 
+        |    | 1) View Subjects         |
+        |    | 2) Add Subject           |
+        |    | 3) Update Subject        |
+        |    | 4) Delete Subject        |
+        |    |--------------------------|
+    
+    """.trimMargin())
+}
+
 /**
  * Runs the main menu loop.
  */
@@ -205,6 +221,21 @@ fun updateAssignment(){
             println("Invalid Assignment ID")
         }
 
+    }
+}
+
+fun deleteAssignment(){
+    val subject: Subject? = askToChooseSubject()
+    if (subject != null) {
+        val assignment: Assignment? = chooseAnAssignment(subject)
+        if (assignment != null) {
+            val deleted = subject.delete(assignment.assignmentID)
+            if (deleted) {
+             println("Delete Successful")
+        } else {
+            println("Delete Not Succeussful")
+            }
+        }
     }
 }
 
