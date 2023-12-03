@@ -1,13 +1,12 @@
-The Assignment Tracker App - JGJordan - James Jordan Grogan
+<h1>Assignment Tracker.</h1>
 
 This console driven app can be used to help manage student's assignments.
 
-The current V2.0 release contains a rudimentary menu with the following options:
+The current V3.0 release contains a menu with the following features
 
-**1) View Subjects
-2) Add a Subject
-3) Update a Subject
-4) Delete a Subject
-5) Exit App**
+Subject Management
+Assignment Tracking
+Persistence
+User Friendly Layout
 
-Along with the V2.0 Release, there functions work properly and can be loaded and saved, meaning you can close the application and continue in another cycle.
+Future releases will include conditional listing and improved assignment tracking 
