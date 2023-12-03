@@ -4,11 +4,14 @@ import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import utils.controllers.SubjectAPI
 import utils.models.Subject
+import utils.persistence.JSONSerializer
+import utils.persistence.XMLSerializer
+import java.io.File
 import java.util.*
 import java.lang.System.exit
 
 
-private val SubjectAPI = SubjectAPI()
+private val SubjectAPI = SubjectAPI(JSONSerializer(File("Subjects.json")))
 
 /**
  * Runs the assignment tracker menu.
@@ -33,6 +36,9 @@ fun mainMenu(): Int {
         |    |--------------------------|
         |    | 0) Exit Program          |
         |    |--------------------------|
+        |    | 10) Load Subjects        |
+        |    | 11) Save Subjects        |
+        |    ----------------------------
         |    
         |     Enter your choice     ===>: 
     """.trimMargin())
@@ -50,6 +56,8 @@ fun runMenu() {
             3 -> updateSubject()
             4 -> deleteSubject()
             0 -> closeApp()
+            10 -> load()
+            11 -> save()
             else -> println("Option: $option is not valid. Try again")
         }
     } while (true)
@@ -76,6 +84,9 @@ fun addSubject() {
         println("Add failed")
     }
 }
+/**
+ * Displays a message indicating the user chose to delete a subject.
+ */
 
 fun deleteSubject() {
     viewSubject()
@@ -113,9 +124,6 @@ fun updateSubject() {
     }
 }
 
-/**
- * Displays a message indicating the user chose to delete a subject.
- */
 
 /**
  * Displays a message indicating the user chose to exit the program and closes the application.
@@ -124,3 +132,21 @@ fun closeApp() {
     println("Exiting...")
     exit(0)
 }
+
+fun save(){
+    try{
+        SubjectAPI.store()
+    }   catch (e: Exception) {
+        System.err.println("Error writing to the file $e")
+    }
+}
+
+fun load(){
+    try {
+        SubjectAPI.load()
+    }   catch (e: Exception) {
+        System.err.println("Error loading the file $e")
+    }
+}
+
+

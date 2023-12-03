@@ -1,9 +1,11 @@
 package utils.controllers
 import utils.models.Subject
+import utils.persistence.Serializer
 
 
-class SubjectAPI {
+class SubjectAPI (serializerType: Serializer) {
     var subjects = ArrayList<Subject>()
+    private var serializer: Serializer = serializerType
 
     fun add(subject: Subject): Boolean {
         return subjects.add(subject)
@@ -50,6 +52,16 @@ class SubjectAPI {
             return true
         }
         return false
+    }
+
+    @Throws(Exception::class)
+    fun load() {
+        subjects = serializer.read() as ArrayList<Subject>
+    }
+
+    @Throws(Exception::class)
+    fun store(){
+        serializer.write(subjects)
     }
 }
 
