@@ -41,5 +41,15 @@ data class Subject(
         if (assignments.isEmpty()) "\n NO ASSIGNMENTS ADDED"
             else Utilities.formatSetString(assignments)
 
+    override fun toString(): String{
+        return """
+            |      Subject: $subjectName
+            |      Lecturer: $subjectLecturer
+            |      Current Grade: $subjectGrade
+            |      Assignments: ${listAssignments()}
+        """.trimMargin()
+
+    }
+
 }
 
