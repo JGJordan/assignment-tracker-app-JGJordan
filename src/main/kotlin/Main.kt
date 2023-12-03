@@ -1,5 +1,6 @@
 package utils
 
+import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import utils.controllers.SubjectAPI
 import utils.models.Subject
@@ -44,7 +45,7 @@ fun runMenu() {
         when (option) {
             1 -> viewSubject()
             2 -> addSubject()
-            3 -> updateSubject()
+           // 3 -> updateSubject()
             4 -> deleteSubject()
             0 -> closeApp()
             else -> println("Option: $option is not valid. Try again")
@@ -66,7 +67,7 @@ fun addSubject() {
     val subjectName = readNextLine("Enter the name of the subject: ")
     val subjectGrade = readNextLine("Enter the grade current grade you have achieved: ")
     val subjectLecturer = readNextLine("Enter the name of your lecturer: ")
-    val isAdded = SubjectAPI.add(Subject(SubjectAPI.numberOfSubjects() + 1, subjectName, subjectGrade,subjectLecturer))
+    val isAdded = SubjectAPI.add(Subject(subjectName, subjectGrade,subjectLecturer))
     if (isAdded) {
         println("Subject is Added")
     } else {
@@ -74,19 +75,33 @@ fun addSubject() {
     }
 }
 
+fun deleteSubject() {
+    viewSubject()
+    if (SubjectAPI.numberOfSubjects() > 0) {
+        val indexToDelete = readNextInt("Please enter the index No. of your subject: ")
+        val subjectToDelete = SubjectAPI.deleteSubject(indexToDelete)
+        if (subjectToDelete != null) {
+            println("Delete is successful")
+        }
+    } else {
+        println("Delete not successful")
+    }
+}
+
 /**
  * Displays a message indicating the user chose to update a subject.
  */
-fun updateSubject() {
-    println("You chose to update a subject")
-}
+//fun updateSubject() {
+//    viewSubject()
+//    if (SubjectAPI.subjects.isEmpty()) "You have no subjects to list. Add a subject and try again"
+//    else {
+
+//    }
+//}
 
 /**
  * Displays a message indicating the user chose to delete a subject.
  */
-fun deleteSubject() {
-    println("You chose to delete a subject")
-}
 
 /**
  * Displays a message indicating the user chose to exit the program and closes the application.
