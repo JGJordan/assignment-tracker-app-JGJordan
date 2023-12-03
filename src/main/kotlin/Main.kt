@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 fun mainMenu(): Int {
     return ScannerInput.readNextInt("""
         |    ____________________________
-        |    | Assignment Tracker V1.0  |
+        |    | Assignment Tracker V2.0  |
         |    |--------------------------|
         |    | 1) View Subjects         |
         |    | 2) Add Subject           |
@@ -33,6 +33,8 @@ fun mainMenu(): Int {
         |    |--------------------------|
         |    | 0) Exit Program          |
         |    |--------------------------|
+        |    
+        |     Enter your choice     ===>: 
     """.trimMargin())
 }
 
@@ -45,7 +47,7 @@ fun runMenu() {
         when (option) {
             1 -> viewSubject()
             2 -> addSubject()
-           // 3 -> updateSubject()
+            3 -> updateSubject()
             4 -> deleteSubject()
             0 -> closeApp()
             else -> println("Option: $option is not valid. Try again")
@@ -65,7 +67,7 @@ fun viewSubject() {
  */
 fun addSubject() {
     val subjectName = readNextLine("Enter the name of the subject: ")
-    val subjectGrade = readNextLine("Enter the grade current grade you have achieved: ")
+    val subjectGrade = readNextInt("Enter the grade current grade you have achieved: ")
     val subjectLecturer = readNextLine("Enter the name of your lecturer: ")
     val isAdded = SubjectAPI.add(Subject(subjectName, subjectGrade,subjectLecturer))
     if (isAdded) {
@@ -91,13 +93,25 @@ fun deleteSubject() {
 /**
  * Displays a message indicating the user chose to update a subject.
  */
-//fun updateSubject() {
-//    viewSubject()
-//    if (SubjectAPI.subjects.isEmpty()) "You have no subjects to list. Add a subject and try again"
-//    else {
+fun updateSubject() {
+    viewSubject()
+    if (SubjectAPI.numberOfSubjects() > 0) {
+        val subjectChoice = readNextInt("Please enter the Index number of the subject you want to update: ")
+        if (SubjectAPI.validIndex(subjectChoice)) {
+            val subjectName = readNextLine("Please enter the new name for your subject: ")
+            val subjectGrade = readNextInt("Please enter your current grade, to the closest whole number: ")
+            val subjectLecturer = readNextLine("Please enter the name of your lecturer: ")
 
-//    }
-//}
+            if (SubjectAPI.updateSubject(subjectChoice, Subject(subjectName, subjectGrade, subjectLecturer))){
+                println("Successfully Updates")
+            } else {
+                println("Failed")
+            }
+        } else {
+            println("Incorrect Index Number. Try again.")
+        }
+    }
+}
 
 /**
  * Displays a message indicating the user chose to delete a subject.
@@ -107,6 +121,6 @@ fun deleteSubject() {
  * Displays a message indicating the user chose to exit the program and closes the application.
  */
 fun closeApp() {
-    println("You chose to exit the program")
+    println("Exiting...")
     exit(0)
 }

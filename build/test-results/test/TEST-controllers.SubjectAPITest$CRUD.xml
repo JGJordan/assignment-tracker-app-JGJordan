@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="controllers.SubjectAPITest$CRUD" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-12-03T11:43:00" hostname="DESKTOP-H2TFO59" time="0.102">
+<testsuite name="controllers.SubjectAPITest$CRUD" tests="8" skipped="0" failures="0" errors="0" timestamp="2023-12-03T13:00:27" hostname="DESKTOP-H2TFO59" time="0.115">
   <properties/>
-  <testcase name="Deleting an existing subject removes it from the Array List()" classname="controllers.SubjectAPITest$CRUD" time="0.081"/>
-  <testcase name="Deleting a non-existent subject returns null (error handling)()" classname="controllers.SubjectAPITest$CRUD" time="0.004"/>
-  <testcase name="Adding a subject to an empty array list adds to the list()" classname="controllers.SubjectAPITest$CRUD" time="0.003"/>
-  <testcase name="Adding a subject to a populated array list adds to the list()" classname="controllers.SubjectAPITest$CRUD" time="0.003"/>
+  <testcase name="Updating a subject that exists updates the subject()" classname="controllers.SubjectAPITest$CRUD" time="0.061"/>
+  <testcase name="Deleting an existing subject removes it from the Array List()" classname="controllers.SubjectAPITest$CRUD" time="0.001"/>
+  <testcase name="Deleting a non-existent subject returns null (error handling)()" classname="controllers.SubjectAPITest$CRUD" time="0.005"/>
+  <testcase name="Trying to update a subject that doesn't exist returns false()" classname="controllers.SubjectAPITest$CRUD" time="0.002"/>
+  <testcase name="Adding a subject to an empty array list adds to the list()" classname="controllers.SubjectAPITest$CRUD" time="0.001"/>
+  <testcase name="Adding a subject to a populated array list adds to the list()" classname="controllers.SubjectAPITest$CRUD" time="0.001"/>
+  <testcase name="When the viewSubjects function is invoked on an empty list, a string is returned()" classname="controllers.SubjectAPITest$CRUD" time="0.011"/>
+  <testcase name="When the viewSubjects function is invoked on a populated list, notes are returned()" classname="controllers.SubjectAPITest$CRUD" time="0.019"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,7 +1,8 @@
 package utils.models
 
 
-data class Subject(val subjectName : String,
-                   val subjectGrade : String,
-                   val subjectLecturer : String
+data class Subject(
+    var subjectName : String,
+    var subjectGrade : Int,
+    var subjectLecturer : String
 )

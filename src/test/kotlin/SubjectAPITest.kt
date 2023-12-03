@@ -21,10 +21,10 @@ class SubjectAPITest {
 
     @BeforeEach
     fun setup(){
-        maths = Subject("Maths","67","Ms. Smith")
-        science = Subject("Science","54", "Mr. Jones")
-        geography = Subject("Geography", "45","Ms. Murphy")
-        language = Subject("Language","65","Mr. Walsh")
+        maths = Subject("Maths",67,"Ms. Smith")
+        science = Subject("Science",54, "Mr. Jones")
+        geography = Subject("Geography", 45,"Ms. Murphy")
+        language = Subject("Language",65,"Mr. Walsh")
 
         populatedList!!.add(maths!!)
         populatedList!!.add(science!!)
@@ -38,7 +38,7 @@ class SubjectAPITest {
     inner class CRUD{
         @Test
         fun `Adding a subject to an empty array list adds to the list`() {
-            val newSubject = Subject("Maths","60", "Ms. Smith")
+            val newSubject = Subject("Maths",60, "Ms. Smith")
             assertEquals(0, emptyList!!.numberOfSubjects())
             assertTrue(emptyList!!.add(newSubject))
             assertEquals(1, emptyList!!.numberOfSubjects())
@@ -46,7 +46,7 @@ class SubjectAPITest {
 
         @Test
         fun `Adding a subject to a populated array list adds to the list`(){
-            val newSubject = Subject("Maths","60","Ms.Smith")
+            val newSubject = Subject("Maths",60,"Ms.Smith")
             assertEquals(4, populatedList!!.numberOfSubjects())
             assertTrue(populatedList!!.add(newSubject))
             assertEquals(5, populatedList!!.numberOfSubjects())
@@ -64,6 +64,38 @@ class SubjectAPITest {
             assertEquals(4, populatedList!!.numberOfSubjects())
             assertEquals(maths, populatedList!!.deleteSubject(0))
             assertEquals(3, populatedList!!.numberOfSubjects())
+        }
+
+        @Test
+        fun `When the viewSubjects function is invoked on a populated list, notes are returned`(){
+            val subjectList = populatedList!!.listSubjects().lowercase()
+            assertEquals(4, populatedList!!.numberOfSubjects())
+            assertTrue(subjectList.contains("maths"))
+            assertTrue(subjectList.contains("science"))
+            assertTrue(subjectList.contains("language"))
+            assertTrue(subjectList.contains("geography"))
+        }
+
+        @Test
+        fun `When the viewSubjects function is invoked on an empty list, a string is returned`(){
+            assertEquals(0,emptyList!!.numberOfSubjects())
+            assertTrue(emptyList!!.listSubjects().contains("You have no subjects"))
+        }
+
+        @Test
+        fun `Updating a subject that exists updates the subject`(){
+            assertEquals(maths, populatedList!!.subjectFinder(0))
+            assertEquals("Maths", populatedList!!.subjectFinder(0)!!.subjectName)
+            assertTrue(populatedList!!.updateSubject(0, Subject("Woodwork",91,
+                "Declan")))
+            assertEquals("Woodwork", populatedList!!.subjectFinder(0)!!.subjectName)
+        }
+
+        @Test
+        fun `Trying to update a subject that doesn't exist returns false`(){
+            assertFalse(populatedList!!.updateSubject(15, Subject("Woodwork", 91, "" +
+                    "Declan")))
+
         }
 
     }
