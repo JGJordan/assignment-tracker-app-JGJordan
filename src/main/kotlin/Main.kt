@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
  * @return The selected menu option.
  */
 fun mainMenu(): Int {
-    return ScannerInput.readNextInt("""
+    return readNextInt("""
         |    ____________________________
         |    | Assignment Tracker V2.0  |
         |    |--------------------------|
