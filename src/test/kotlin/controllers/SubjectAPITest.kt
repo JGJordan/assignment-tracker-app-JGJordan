@@ -1,7 +1,6 @@
-package controllers
+package controllers.controllers
 
 
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -9,6 +8,9 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import utils.models.Subject
 import utils.controllers.SubjectAPI
+import utils.persistence.JSONSerializer
+import utils.persistence.XMLSerializer
+import java.io.File
 
 
 class SubjectAPITest {
@@ -16,8 +18,8 @@ class SubjectAPITest {
     private var science: Subject? = null
     private var geography: Subject? = null
     private var language: Subject? = null
-    private var emptyList: SubjectAPI? = SubjectAPI()
-    private var populatedList: SubjectAPI? = SubjectAPI()
+    private var emptyList: SubjectAPI? = SubjectAPI(XMLSerializer(File("Subjects.xml")))
+    private var populatedList: SubjectAPI? = SubjectAPI(XMLSerializer(File("Subject.xml")))
 
     @BeforeEach
     fun setup(){
@@ -98,5 +100,38 @@ class SubjectAPITest {
 
         }
 
+
     }
+
+    @Nested
+    inner class persistenceTests {
+
+        @Test
+        fun `Saving and loading an empty collection won't crash the application` (){
+            val storeSubject = SubjectAPI(XMLSerializer(File("subjects.xml")))
+            storeSubject.store()
+
+            val loadingSubject = SubjectAPI(XMLSerializer(File("subjects.xml")))
+            loadingSubject.load()
+
+            assertEquals(0, storeSubject.numberOfSubjects())
+            assertEquals(0, loadingSubject.numberOfSubjects())
+            assertEquals (storeSubject.numberOfSubjects(), loadingSubject.numberOfSubjects())
+        }
+
+        @Test
+        fun `Saving and loading an empty collection wont crash the application` (){
+            val storeSubject = SubjectAPI(JSONSerializer(File("subjects.json")))
+            storeSubject.store()
+
+            val loadingSubject = SubjectAPI(JSONSerializer(File("subjects.json")))
+            loadingSubject.load()
+
+            assertEquals(0, storeSubject.numberOfSubjects())
+            assertEquals(0, loadingSubject.numberOfSubjects())
+            assertEquals (storeSubject.numberOfSubjects(), loadingSubject.numberOfSubjects())
+        }
+
+    }
+
 }
