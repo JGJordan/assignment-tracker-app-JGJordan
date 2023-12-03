@@ -11,11 +11,13 @@ import java.io.File
 import java.util.*
 import java.lang.System.exit
 
-
+// Create an instance of SubjectAPI using a JSONSerializer and a file named "Subjects.json"
 private val SubjectAPI = SubjectAPI(JSONSerializer(File("Subjects.json")))
 
 /**
  * Runs the assignment tracker menu.
+ * This function serves as the entry point for the assignment tracker application.
+ * @param args Command-line arguments (not used in this application).
  */
 fun main(args: Array<String>) {
     runMenu()
@@ -55,9 +57,11 @@ fun mainMenu(): Int {
 }
 
 
-
 /**
  * Runs the main menu loop.
+ */
+/**
+ * Runs the main menu loop, continuously prompting for user options until exit.
  */
 fun runMenu() {
     do {
@@ -85,25 +89,25 @@ fun viewSubject() {
     println(SubjectAPI.listSubjects())
 }
 
-
 /**
  * Displays a message indicating the user chose to add a subject.
  */
 fun addSubject() {
     val subjectName = readNextLine("Enter the name of the subject: ")
-    val subjectGrade = readNextInt("Enter the grade current grade you have achieved: ")
+    val subjectGrade = readNextInt("Enter the current grade you have achieved: ")
     val subjectLecturer = readNextLine("Enter the name of your lecturer: ")
-    val isAdded = SubjectAPI.add(Subject(subjectName, subjectGrade,subjectLecturer))
+    val isAdded = SubjectAPI.add(Subject(subjectName, subjectGrade, subjectLecturer))
     if (isAdded) {
         println("Subject is Added")
     } else {
         println("Add failed")
     }
 }
-/**
- * Displays a message indicating the user chose to delete a subject.
- */
 
+
+/**
+ * Deletes a subject based on the user's input index.
+ */
 fun deleteSubject() {
     viewSubject()
     if (SubjectAPI.numberOfSubjects() > 0) {
@@ -111,14 +115,16 @@ fun deleteSubject() {
         val subjectToDelete = SubjectAPI.deleteSubject(indexToDelete)
         if (subjectToDelete != null) {
             println("Delete is successful")
+        } else {
+            println("Delete not successful")
         }
     } else {
-        println("Delete not successful")
+        println("No subjects available to delete")
     }
 }
 
 /**
- * Displays a message indicating the user chose to update a subject.
+ * Updates the details of a subject based on the user's input.
  */
 fun updateSubject() {
     viewSubject()
@@ -130,16 +136,15 @@ fun updateSubject() {
             val subjectLecturer = readNextLine("Please enter the name of your lecturer: ")
 
             if (SubjectAPI.updateSubject(subjectChoice, Subject(subjectName, subjectGrade, subjectLecturer))){
-                println("Successfully Updates")
+                println("Successfully updated subject")
             } else {
-                println("Failed")
+                println("Failed to update subject")
             }
         } else {
             println("Incorrect Index Number. Try again.")
         }
     }
 }
-
 
 /**
  * Displays a message indicating the user chose to exit the program and closes the application.
@@ -149,6 +154,9 @@ fun closeApp() {
     exit(0)
 }
 
+/**
+ * Saves data using the SubjectAPI.
+ */
 fun save(){
     try{
         SubjectAPI.store()
@@ -157,6 +165,9 @@ fun save(){
     }
 }
 
+/**
+ * Loads data using the SubjectAPI.
+ */
 fun load(){
     try {
         SubjectAPI.load()
@@ -165,14 +176,27 @@ fun load(){
     }
 }
 
+/**
+ * Adds an assignment to a subject based on user input.
+ */
 private fun addAssignment(){
     val subject: Subject? = askToChooseSubject()
-    if (subject != null) if (subject.addAssignment(Assignment(assignmentSummary =
-        readNextLine("Enter a summary for this assignment: "),
-            assignmentWeight = readNextInt("Enter assignment weight to the closest whole number: "))))
-    else print ("Unsuccessful")
+    if (subject != null) {
+        if (subject.addAssignment(Assignment(assignmentSummary = readNextLine("Enter a summary for this assignment: "),
+                assignmentWeight = readNextInt("Enter assignment weight to the closest whole number: ")))) {
+            println("Assignment added successfully")
+        } else {
+            println("Failed to add assignment")
+        }
+    } else {
+        println("No subject chosen")
+    }
 }
 
+/**
+ * Prompts the user to choose a subject.
+ * @return The chosen subject or null if not found or chosen.
+ */
 private fun askToChooseSubject(): Subject? {
     viewSubject()
 
@@ -182,7 +206,6 @@ private fun askToChooseSubject(): Subject? {
             subject
         } else {
             null
-
         }
     } else {
         println("Invalid Choice")
@@ -190,6 +213,9 @@ private fun askToChooseSubject(): Subject? {
     return null
 }
 
+/**
+ * Updates an assignment based on user input.
+ */
 fun updateAssignment(){
     val subject: Subject? = askToChooseSubject()
     if (subject != null) {
@@ -210,6 +236,9 @@ fun updateAssignment(){
     }
 }
 
+/**
+ * Deletes an assignment based on user input.
+ */
 fun deleteAssignment(){
     val subject: Subject? = askToChooseSubject()
     if (subject != null) {
@@ -219,20 +248,27 @@ fun deleteAssignment(){
             if (deleted) {
                 println("Delete Successful")
             } else {
-                println("Delete Not Succcessful")
+                println("Delete Not Successful")
             }
-    }   }
+        }
+    }
 }
 
-
-    private fun chooseAnAssignment(subject: Subject): Assignment? {
+/**
+ * Allows the user to choose an assignment for a subject.
+ * @param subject The subject for which the assignment is chosen.
+ * @return The chosen assignment or null if not found or chosen.
+ */
+private fun chooseAnAssignment(subject: Subject): Assignment? {
     if (subject.numberOfAssignments() > 0) {
         print(subject.listAssignments())
         return subject.findAssignment(readNextInt("Enter the index number of your assignment: "))
     } else {
         println("You have no assignments uploaded")
         return null
-    }}
+    }
+}
+
 
 
 

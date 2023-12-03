@@ -1,0 +1,17 @@
+<object-stream>
+  <list>
+    <utils.models.Subject>
+      <subjectName>Maths</subjectName>
+      <subjectGrade>78</subjectGrade>
+      <subjectLecturer>Ms. Smith</subjectLecturer>
+      <assignments class="linked-hash-set">
+        <utils.models.Assignment>
+          <assignmentID>0</assignmentID>
+          <assignmentSummary>Learning Algebra</assignmentSummary>
+          <assignmentWeight>65</assignmentWeight>
+        </utils.models.Assignment>
+      </assignments>
+      <lastAssignmentID>1</lastAssignmentID>
+    </utils.models.Subject>
+  </list>
+</object-stream>
