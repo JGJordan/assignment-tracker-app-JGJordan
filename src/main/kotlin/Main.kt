@@ -3,6 +3,7 @@ package utils
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import utils.controllers.SubjectAPI
+import utils.models.Assignment
 import utils.models.Subject
 import utils.persistence.JSONSerializer
 import utils.persistence.XMLSerializer
@@ -29,10 +30,19 @@ fun mainMenu(): Int {
         |    ____________________________
         |    | Assignment Tracker V2.0  |
         |    |--------------------------|
+        |    |      SUBJECT MENU        |
+        |    |                          | 
         |    | 1) View Subjects         |
         |    | 2) Add Subject           |
         |    | 3) Update Subject        |
         |    | 4) Delete Subject        |
+        |    |--------------------------|
+        |    |     ASSIGNMENT MENU      |
+        |    |                          | 
+        |    |                          |
+        |    | 5) Add an Assignment     |
+        |    | 6) Update an Assignment  |
+        |    | 7) Delete an Assignment  |
         |    |--------------------------|
         |    | 0) Exit Program          |
         |    |--------------------------|
@@ -55,6 +65,9 @@ fun runMenu() {
             2 -> addSubject()
             3 -> updateSubject()
             4 -> deleteSubject()
+            5 -> addAssignment()
+            6 -> updateAssignment()
+            7 -> deleteAssignment()
             0 -> closeApp()
             10 -> load()
             11 -> save()
@@ -69,6 +82,7 @@ fun runMenu() {
 fun viewSubject() {
     println(SubjectAPI.listSubjects())
 }
+
 
 /**
  * Displays a message indicating the user chose to add a subject.
@@ -148,5 +162,63 @@ fun load(){
         System.err.println("Error loading the file $e")
     }
 }
+
+private fun addAssignment(){
+    val subject: Subject? = askToChooseSubject()
+    if (subject != null) if (subject.addAssignment(Assignment(assignmentSummary =
+        readNextLine("Enter a summary for this assignment: "),
+            assignmentWeight = readNextInt("Enter assignment weight to the closest whole number: "))))
+    else print ("Unsuccessful")
+}
+
+private fun askToChooseSubject(): Subject? {
+    viewSubject()
+
+    if (SubjectAPI.numberOfSubjects() > 0) {
+        val subject = SubjectAPI.subjectFinder((readNextInt("Enter the Index number of your subject: ")))
+        return if (subject != null) {
+            subject
+        } else {
+            null
+
+        }
+    } else {
+        println("Invalid Choice")
+    }
+    return null
+}
+
+fun updateAssignment(){
+    val subject: Subject? = askToChooseSubject()
+    if (subject != null) {
+        val assignment: Assignment? = chooseAnAssignment(subject)
+        if (assignment != null){
+            val newSummary = readNextLine("Enter new assignment summary: ")
+            val newWeight = readNextInt("Enter new assignment weight: ")
+            if (subject.update(assignment.assignmentID, Assignment(assignmentSummary = newSummary,
+                    assignmentWeight = newWeight))) {
+                println("Assignments Updated")
+            } else {
+                println("Assignment not Updated")
+            }
+        } else {
+            println("Invalid Assignment ID")
+        }
+
+    }
+}
+
+
+
+private fun chooseAnAssignment(subject: Subject): Assignment? {
+    if (subject.numberOfAssignments() > 0) {
+        print(subject.listAssignments())
+        return subject.findAssignment(readNextInt("Enter the index number of your assignment: "))
+    } else {
+        println("You have no assignments uploaded")
+        return null
+    }
+}
+
 
 
