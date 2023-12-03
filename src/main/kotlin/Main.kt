@@ -54,21 +54,7 @@ fun mainMenu(): Int {
     """.trimMargin())
 }
 
-fun subjectMenu(): Int {
-    return readNextInt("""
-        |    ____________________________
-        |    |                          | 
-        |    |--------------------------|
-        |    |      SUBJECT MENU        |
-        |    |                          | 
-        |    | 1) View Subjects         |
-        |    | 2) Add Subject           |
-        |    | 3) Update Subject        |
-        |    | 4) Delete Subject        |
-        |    |--------------------------|
-    
-    """.trimMargin())
-}
+
 
 /**
  * Runs the main menu loop.
@@ -231,25 +217,22 @@ fun deleteAssignment(){
         if (assignment != null) {
             val deleted = subject.delete(assignment.assignmentID)
             if (deleted) {
-             println("Delete Successful")
-        } else {
-            println("Delete Not Succeussful")
+                println("Delete Successful")
+            } else {
+                println("Delete Not Succcessful")
             }
-        }
-    }
+    }   }
 }
 
 
-
-private fun chooseAnAssignment(subject: Subject): Assignment? {
+    private fun chooseAnAssignment(subject: Subject): Assignment? {
     if (subject.numberOfAssignments() > 0) {
         print(subject.listAssignments())
         return subject.findAssignment(readNextInt("Enter the index number of your assignment: "))
     } else {
         println("You have no assignments uploaded")
         return null
-    }
-}
+    }}
 
 
 

@@ -1,6 +1,7 @@
 package utils.controllers
 import utils.models.Subject
 import utils.persistence.Serializer
+import utils.utils.Utilities
 
 
 class SubjectAPI (serializerType: Serializer) {
@@ -14,13 +15,10 @@ class SubjectAPI (serializerType: Serializer) {
     fun numberOfSubjects() : Int {
         return subjects.size
     }
-    fun listSubjects(): String {
-        return if (subjects.isNotEmpty()) {
-            subjects.joinToString(" ")
-        } else {
-            "You have no subjects"
-        }
-    }
+    fun listSubjects() =
+        if (subjects.isEmpty()) "\nNo Subjects Found"
+        else Utilities.formatListString(subjects)
+
 
     fun isValidListIndex(index: Int, list: List <Any?>): Boolean {
         return (index >= 0 && index < list.size)
